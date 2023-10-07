@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -23,52 +21,116 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@sample/posts.json/data/authorAvatar" />
 
-        <TextView
-            android:id="@+id/author"
+        <LinearLayout
+            android:id="@+id/author_data"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/common_spacing"
-            android:layout_marginEnd="@dimen/common_spacing"
-            android:ellipsize="end"
-            android:singleLine="true"
-            app:layout_constraintBottom_toTopOf="@+id/published"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@id/avatar"
             app:layout_constraintEnd_toStartOf="@id/menu"
             app:layout_constraintStart_toEndOf="@id/avatar"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
-            tools:text="@sample/posts.json/data/author" />
+            app:layout_constraintTop_toTopOf="@id/avatar">
 
-        <TextView
-            android:id="@+id/published"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/common_spacing"
-            android:layout_marginEnd="@dimen/common_spacing"
-            android:layout_marginBottom="@dimen/common_spacing"
-            app:layout_constraintBottom_toBottomOf="@id/header"
-            app:layout_constraintEnd_toStartOf="@id/menu"
-            app:layout_constraintStart_toEndOf="@id/avatar"
-            app:layout_constraintTop_toBottomOf="@id/author"
-            tools:text="@sample/posts.json/data/published" />
+            <TextView
+                android:id="@+id/author"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/common_spacing"
+                android:ellipsize="end"
+                android:singleLine="true"
+                app:layout_constraintBottom_toTopOf="@id/author_job"
+                app:layout_constraintEnd_toStartOf="@id/menu"
+                app:layout_constraintStart_toEndOf="@id/avatar"
+                app:layout_constraintTop_toTopOf="@id/avatar"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="Ivan Ivanov" />
+
+            <TextView
+                android:id="@+id/author_job"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/common_spacing"
+                android:ellipsize="end"
+                android:singleLine="true"
+                tools:text="Teacher" />
+
+            <TextView
+                android:id="@+id/published"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/common_spacing"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="@color/colorAccent"
+                tools:text="@sample/posts.json/data/published"
+                />
+        </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/menu"
+            style="@style/Widget.AppTheme.IconButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/common_spacing"
             android:contentDescription="@string/description_post_menu"
             app:icon="@drawable/ic_more_vert_24dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            style="@style/Widget.AppTheme.IconButton"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="avatar,published,menu" />
+            app:constraint_referenced_ids="avatar, author_data, menu" />
+
+        <ImageView
+            android:id="@+id/event_date_icon"
+            android:layout_width="@dimen/icon_button_min_size"
+            android:layout_height="@dimen/icon_button_min_size"
+            android:layout_marginVertical="@dimen/common_spacing"
+            android:layout_marginEnd="@dimen/common_spacing"
+            android:src="@drawable/baseline_calendar_month_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/header"
+            android:contentDescription="@string/date_of_event" />
+
+        <TextView
+            android:id="@+id/event_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/common_spacing"
+            app:layout_constraintBottom_toBottomOf="@id/event_date_icon"
+            app:layout_constraintStart_toEndOf="@id/event_date_icon"
+            app:layout_constraintTop_toTopOf="@id/event_date_icon"
+            tools:text="@tools:sample/lorem" />
+
+        <ImageView
+            android:id="@+id/format_of_event_icon"
+            android:layout_width="@dimen/icon_button_min_size"
+            android:layout_height="@dimen/icon_button_min_size"
+            android:layout_marginVertical="@dimen/common_spacing"
+            android:layout_marginEnd="@dimen/common_spacing"
+            android:src="@drawable/is_rss_feed_24"
+            app:layout_constraintTop_toBottomOf="@id/event_date_icon"
+            android:contentDescription="@string/type_of_event" />
+
+        <TextView
+            android:id="@+id/event_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/common_spacing"
+            app:layout_constraintBottom_toBottomOf="@id/format_of_event_icon"
+            app:layout_constraintStart_toEndOf="@id/format_of_event_icon"
+            app:layout_constraintTop_toTopOf="@id/format_of_event_icon"
+            tools:text="@tools:sample/lorem" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/event_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="format_of_event_icon, event_type, event_date_icon, event_date" />
 
         <TextView
             android:id="@+id/content"
@@ -83,6 +145,53 @@
             app:layout_constraintTop_toBottomOf="@id/header"
             tools:text="@sample/posts.json/data/content" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/play_button"
+            style="@style/Widget.AppCompat.ActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/content" />
+
+        <TextView
+            android:id="@+id/music_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/play_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/play_button"
+            app:layout_constraintTop_toTopOf="@id/play_button" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/music"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="play_button, music_title" />
+
+        <ImageView
+            android:id="@+id/attachment_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/area64x"
+            android:contentDescription="@string/attachment"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/play_button" />
+
+        <VideoView
+            android:id="@+id/attachment_video"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/area64x"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/attachment_image" />
+
+        <TextView
+            android:id="@+id/link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            app:layout_constraintTop_toBottomOf="@id/attachment_video" />
+
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/footer"
             android:layout_width="wrap_content"
@@ -92,28 +201,26 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/like"
+            style="@style/Widget.AppTheme.LikeCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checkable="true"
             android:contentDescription="@string/description_post_like"
+            app:icon="@drawable/ic_like_24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/footer"
-            app:icon="@drawable/ic_like_24dp"
             tools:checked="@sample/posts.json/data/likedByMe"
-            tools:text="@sample/posts.json/data/likes"
-            style="@style/Widget.AppTheme.LikeCheckBox"
-            />
+            tools:text="@sample/posts.json/data/likes" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/share"
+            style="@style/Widget.AppTheme.IconButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/common_spacing"
             android:contentDescription="@string/description_post_share"
-            app:layout_constraintStart_toEndOf="@+id/like"
-            app:layout_constraintTop_toBottomOf="@id/footer"
             app:icon="@drawable/ic_share_24dp"
-            style="@style/Widget.AppTheme.IconButton"
-            />
+            app:layout_constraintStart_toEndOf="@+id/like"
+            app:layout_constraintTop_toBottomOf="@id/footer" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

@@ -41,4 +41,11 @@
     <string name="close_button">Close</string>
     <string name="match_passwords">Password must match</string>
     <string name="emptyRegister">Fields are empty</string>
+    <string name="avatar">Avatar</string>
+    <string name="job">Job</string>
+    <string name="edit">Edit</string>
+    <string name="dash">–</string>
+    <string name="attachment">Attachment</string>
+    <string name="date_of_event">Data of event</string>
+    <string name="type_of_event">Type of event</string>
 </resources>

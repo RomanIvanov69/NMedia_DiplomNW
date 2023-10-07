@@ -42,4 +42,11 @@
     <string name="close_button">Закрыть</string>
     <string name="match_passwords">Пароли должны совпадать</string>
     <string name="emptyRegister">Поля не заполнены</string>
+    <string name="avatar">Аватар</string>
+    <string name="job">Место работы</string>
+    <string name="edit">Редактировать</string>
+    <string name="dash">–</string>
+    <string name="attachment">Вложение</string>
+    <string name="date_of_event">Дата события</string>
+    <string name="type_of_event">Формат события</string>
 </resources>
