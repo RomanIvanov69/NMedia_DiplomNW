@@ -1,6 +1,7 @@
 package ru.netology.nmedia.auth
 
 import android.content.Context
+import androidx.core.content.edit
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
 import dagger.hilt.EntryPoint
@@ -17,81 +18,71 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import ru.netology.nmedia.api.ApiService
 import ru.netology.nmedia.dto.PushToken
+import ru.netology.nmedia.model.AuthModel
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AppAuth @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @ApplicationContext
+    private val context: Context
 ) {
     private val prefs = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
-    private val idKey = "id"
-    private val tokenKey = "token"
 
-    private val _authStateFlow: MutableStateFlow<AuthState>
+    private val _authState: MutableStateFlow<AuthModel>
 
     init {
-        val id = prefs.getLong(idKey, 0)
-        val token = prefs.getString(tokenKey, null)
+        val token = prefs.getString(TOKEN_KEY, null)
+        val id = prefs.getInt(ID_KEY, 0)
 
-        if (id == 0L || token == null) {
-            _authStateFlow = MutableStateFlow(AuthState())
-            with(prefs.edit()) {
-                clear()
-                apply()
-            }
+        if (token == null || id == 0) {
+            _authState = MutableStateFlow(AuthModel())
+            prefs.edit { clear() }
         } else {
-            _authStateFlow = MutableStateFlow(AuthState(id, token))
+            _authState = MutableStateFlow(AuthModel(id, token))
         }
+        sendPushToken()
     }
 
-    val authStateFlow: StateFlow<AuthState> = _authStateFlow.asStateFlow()
-
-    @InstallIn(SingletonComponent::class)
-    @EntryPoint
-    interface AppAuthEntryPoint {
-        fun apiService(): ApiService
-    }
+    val authState = _authState.asStateFlow()
 
     @Synchronized
-    fun setAuth(id: Long, token: String) {
-        _authStateFlow.value = AuthState(id, token)
-        with(prefs.edit()) {
-            putLong(idKey, id)
-            putString(tokenKey, token)
-            apply()
+    fun setAuth(id: Int, token: String?) {
+        _authState.value = AuthModel(id, token)
+        prefs.edit {
+            putInt(ID_KEY, id)
+            putString(TOKEN_KEY, token)
         }
         sendPushToken()
     }
 
     @Synchronized
     fun removeAuth() {
-        _authStateFlow.value = AuthState()
-        with(prefs.edit()) {
-            clear()
-            apply()
-        }
+        _authState.value = AuthModel()
+        prefs.edit { clear() }
         sendPushToken()
     }
 
-    fun sendPushToken(token: String? = null) {
+    @InstallIn(SingletonComponent::class)
+    @EntryPoint
+    interface AppAuthEntryPoint{
+        fun getApiService(): ApiService
+    }
+
+    private fun sendPushToken(token: String? = null) {
         CoroutineScope(Dispatchers.Default).launch {
             try {
-                val pushToken = PushToken(token ?: Firebase.messaging.token.await())
-                getApiService(context).save(pushToken)
+                val pushToken = token ?: ""
+                val entryPoint = EntryPointAccessors.fromApplication(context, AppAuthEntryPoint::class.java)
+                entryPoint.getApiService().saveToken(PushToken(pushToken))
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
     }
 
-    private fun getApiService(context: Context): ApiService {
-        val hiltEntryPoint = EntryPointAccessors.fromApplication(
-            context,
-            AppAuthEntryPoint::class.java
-        )
-        return hiltEntryPoint.apiService()
+    companion object {
+        private const val TOKEN_KEY = "TOKEN_KEY"
+        private const val ID_KEY = "ID_KEY"
     }
 }
-
-data class AuthState(val id: Long = 0, val token: String? = null)

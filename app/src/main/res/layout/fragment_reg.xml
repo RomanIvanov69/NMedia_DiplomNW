@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".ui.auth.RegFragment">
+
+    <ImageView
+        android:id="@+id/close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|right"
+        android:contentDescription="@string/close_button"
+        android:padding="@dimen/common_spacing"
+        android:src="@drawable/close" />
+
+    <EditText
+        android:id="@+id/registration_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/area8x"
+        android:text="@string/registration" />
+
+    <FrameLayout
+        android:id="@+id/avatar_container"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/area32x">
+
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="@dimen/area16x"
+            android:layout_height="@dimen/area16x"
+            android:layout_margin="@dimen/area6x"
+            android:src="@drawable/ic_empty_avatar" />
+
+        <ImageView
+            android:id="@+id/pick_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|bottom"
+            android:layout_margin="@dimen/area3x"
+            android:src="@drawable/ic_baseline_add_photo" />
+
+        <ImageView
+            android:id="@+id/take_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:layout_margin="@dimen/area3x"
+            android:src="@drawable/ic_baseline_add_a_photo_24" />
+        <ImageView
+            android:id="@+id/remove_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="@dimen/area3x"
+            android:src="@drawable/ic_baseline_delete_24" />
+
+    </FrameLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="@dimen/area80x"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/area4x"
+        android:hint="@string/name"
+        app:expandedHintEnabled="false">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/name_input"
+            android:layout_width="@dimen/area80x"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/login"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="@dimen/area80x"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/area4x"
+        android:hint="@string/login"
+        app:expandedHintEnabled="false">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/login_input"
+            android:layout_width="@dimen/area80x"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/password"
+        style="@style/AppTheme"
+        android:layout_width="@dimen/area80x"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/area4x"
+        android:hint="@string/password"
+        app:endIconMode="password_toggle"
+        app:expandedHintEnabled="false">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password_input"
+            android:layout_width="@dimen/area80x"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/confirm_password"
+        style="@style/AppTheme"
+        android:layout_width="@dimen/area80x"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/area4x"
+        android:hint="@string/confirm_pass"
+        app:endIconMode="password_toggle"
+        app:expandedHintEnabled="false">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password_confirm_input"
+            android:layout_width="@dimen/area80x"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bt_sign_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_up" />
+</LinearLayout>

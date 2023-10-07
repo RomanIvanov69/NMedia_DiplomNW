@@ -3,72 +3,117 @@ package ru.netology.nmedia.api
 import okhttp3.Interceptor
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 import ru.netology.nmedia.BuildConfig
+import ru.netology.nmedia.dto.Event
+import ru.netology.nmedia.dto.Job
 import ru.netology.nmedia.dto.Media
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.dto.PushToken
-
-private const val BASE_URL = "${BuildConfig.BASE_URL}/api/slow/"
-
-fun okhttp(vararg interceptors: Interceptor): OkHttpClient = OkHttpClient.Builder()
-    .apply {
-        interceptors.forEach {
-            this.addInterceptor(it)
-        }
-    }
-    .build()
-
-fun retrofit(client: OkHttpClient): Retrofit = Retrofit.Builder()
-    .addConverterFactory(GsonConverterFactory.create())
-    .baseUrl(BASE_URL)
-    .client(client)
-    .build()
+import ru.netology.nmedia.dto.User
+import ru.netology.nmedia.model.AuthModel
 
 interface ApiService {
     @POST("users/push-tokens")
-    suspend fun save(@Body pushToken: PushToken): Response<Unit>
+    suspend fun saveToken(@Body pushToken: PushToken)
 
-    @GET("posts")
-    suspend fun getAll(): Response<List<Post>>
+    @FormUrlEncoded
+    @POST("users/authentication")
+    suspend fun authentication(
+        @Field("login") login: String,
+        @Field("password") password: String
+    ): Response<AuthModel>
 
-    @GET("posts/{id}/newer")
-    suspend fun getNewer(@Path("id") id: Long): Response<List<Post>>
+    @FormUrlEncoded
+    @POST("users/registration")
+    suspend fun registration(
+        @Field("login") login: String,
+        @Field("password") password: String,
+        @Field("name") name: String
+    ): Response<AuthModel>
+
+
+    @Multipart
+    @POST("users/registration")
+    suspend fun registerWithPhoto(
+        @Part("login") login: RequestBody,
+        @Part("password") password: RequestBody,
+        @Part("name") name: RequestBody,
+        @Part media: MultipartBody.Part,
+    ): Response<AuthModel>
+
+    @GET("posts/latest")
+    suspend fun getLatestPosts(@Query("count") count: Int): Response<List<Post>>
 
     @GET("posts/{id}/before")
-    suspend fun getBefore(
-        @Path("id") id: Long,
+    suspend fun getPostsBefore(
+        @Path("id") id: Int,
         @Query("count") count: Int
     ): Response<List<Post>>
 
     @GET("posts/{id}/after")
-    suspend fun getAfter(
-        @Path("id") id: Long,
+    suspend fun getPostsAfter(
+        @Path("id") id: Int,
         @Query("count") count: Int
     ): Response<List<Post>>
 
-    @GET("posts/latest")
-    suspend fun getLatest(@Query("count") count: Int): Response<List<Post>>
-
-    @GET("posts/{id}")
-    suspend fun getById(@Path("id") id: Long): Response<Post>
-
     @POST("posts")
-    suspend fun save(@Body post: Post): Response<Post>
+    suspend fun createPost(@Body post: Post): Response<Post>
 
     @DELETE("posts/{id}")
-    suspend fun removeById(@Path("id") id: Long): Response<Unit>
+    suspend fun deletePost(@Path("id") postId: Int): Response<Unit>
 
     @POST("posts/{id}/likes")
-    suspend fun likeById(@Path("id") id: Long): Response<Post>
+    suspend fun likePostById(@Path("id") postId: Int): Response<Post>
 
     @DELETE("posts/{id}/likes")
-    suspend fun dislikeById(@Path("id") id: Long): Response<Post>
+    suspend fun dislikePostById(@Path("id") postId: Int): Response<Post>
+
+    @GET("events/latest")
+    suspend fun getLatestEvents(@Query("count") count: Int): Response<List<Event>>
+
+    @GET("events/{id}/before")
+    suspend fun getEventsBefore(
+        @Path("id") id: Int,
+        @Query("count") count: Int
+    ): Response<List<Event>>
+
+    @GET("events/{id}/after")
+    suspend fun getEventsAfter(
+        @Path("id") id: Int,
+        @Query("count") count: Int
+    ): Response<List<Event>>
+
+    @POST("events")
+    suspend fun createEvent(@Body event: Event): Response<Event>
+
+    @DELETE("events/{id}")
+    suspend fun deleteEvent(@Path("id") id: Int): Response<Unit>
+
+    @POST("events/{id}/likes")
+    suspend fun likeEventById(@Path("id") eventId: Int): Response<Event>
+
+    @DELETE("events/{id}/likes")
+    suspend fun dislikeEventById(@Path("id") eventId: Int): Response<Event>
+
+    @GET("users/{id}")
+    suspend fun getUserById(@Path("id") id: Int): Response<User>
 
     @Multipart
     @POST("media")
-    suspend fun upload(@Part media: MultipartBody.Part): Response<Media>
+    suspend fun uploadMedia(@Part file: MultipartBody.Part): Response<Media>
+
+    @GET("{id}/jobs")
+    suspend fun getJobsByUserId(@Path("id") id: Int): Response<List<Job>>
+
+    @POST("my/jobs")
+    suspend fun saveJob(@Body job: Job): Response<Job>
+
+    @DELETE("my/jobs/{id}")
+    suspend fun removeJobById(@Path("id") id: Int): Response<Unit>
+
 }

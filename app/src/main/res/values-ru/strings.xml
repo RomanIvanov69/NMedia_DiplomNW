@@ -27,7 +27,19 @@
     <string name="description_photo">Фото</string>
     <string name="remove">Удалить</string>
     <string name="sign_in">Вход</string>
+    <string name="login">Логин</string>
     <string name="sign_up">Регистрация</string>
     <string name="sign_out">Выход</string>
     <string name="ad_description">Реклама</string>
+    <string name="welcome">Добро пожаловать!</string>
+    <string name="password">Введите пароль</string>
+    <string name="not_registered_yet_text">Ещё не зарегистрированы?</string>
+    <string name="emptyAuth">Логин или пароль не заполнены</string>
+    <string name="incorrect_auth">Не верный логин или пароль</string>
+    <string name="registration">Регистрация</string>
+    <string name="name">Имя</string>
+    <string name="confirm_pass">Подтвердите пароль</string>
+    <string name="close_button">Закрыть</string>
+    <string name="match_passwords">Пароли должны совпадать</string>
+    <string name="emptyRegister">Поля не заполнены</string>
 </resources>

@@ -26,7 +26,19 @@
     <string name="description_photo">Photo</string>
     <string name="remove">Remove</string>
     <string name="sign_in">Sign In</string>
+    <string name="login">Login</string>
     <string name="sign_up">Sign Up</string>
     <string name="sign_out">Sign Out</string>
     <string name="ad_description">ad</string>
+    <string name="welcome">Welcome</string>
+    <string name="password">Password</string>
+    <string name="not_registered_yet_text">Not registered yet?</string>
+    <string name="emptyAuth">Login or Password not filled in</string>
+    <string name="incorrect_auth">incorrect login or password</string>
+    <string name="registration">Registration</string>
+    <string name="name">Name</string>
+    <string name="confirm_pass">Confirm password</string>
+    <string name="close_button">Close</string>
+    <string name="match_passwords">Password must match</string>
+    <string name="emptyRegister">Fields are empty</string>
 </resources>

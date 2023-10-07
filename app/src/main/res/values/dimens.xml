@@ -6,5 +6,19 @@
     <dimen name="checkbox_padding_start">8dp</dimen>
     <dimen name="icon_button_padding">12dp</dimen>
     <dimen name="icon_button_min_size">48dp</dimen>
+    <dimen name="area1x">4dp</dimen>
+    <dimen name="area2x">8dp</dimen>
+    <dimen name="area3x">12dp</dimen>
+    <dimen name="area4x">16dp</dimen>
+    <dimen name="area6x">24dp</dimen>
+    <dimen name="area8x">32dp</dimen>
+    <dimen name="area12x">48dp</dimen>
+    <dimen name="area16x">64dp</dimen>
+    <dimen name="area24x">96dp</dimen>
+    <dimen name="area32x">128dp</dimen>
+    <dimen name="area48x">192dp</dimen>
+    <dimen name="area64x">256dp</dimen>
+    <dimen name="area80x">320dp</dimen>
+    <dimen name="area96x">384dp</dimen>
 </resources>
 
