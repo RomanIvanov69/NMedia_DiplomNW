@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NMedia</string>
+    <string name="app_name">NeWork</string>
     <string name="hello">Hello World!</string>
     <string name="description_post_author_avatar">Post author avatar</string>
     <string name="description_post_menu">Post menu</string>
@@ -48,4 +48,29 @@
     <string name="attachment">Attachment</string>
     <string name="date_of_event">Data of event</string>
     <string name="type_of_event">Type of event</string>
+    <string name="play_pause_stop">Play/pause/stop</string>
+    <string name="play">Play</string>
+    <string name="description_full_screen_image">Description full screen image</string>
+    <string name="authorization">authorization</string>
+    <string name="users">Users</string>
+    <string name="posts">Posts</string>
+    <string name="events">Events</string>
+    <string name="online">Online</string>
+    <string name="offline">Offline</string>
+    <string name="add_date">Date</string>
+    <string name="add_time">Time</string>
+    <string name="link">Link</string>
+    <string name="add_image">Image</string>
+    <string name="clear_image">Clear image</string>
+    <string name="create_post">Create</string>
+    <string name="position">Position</string>
+    <string name="start">Start</string>
+    <string name="finish">Finish</string>
+    <string name="add_event">Add event</string>
+    <string name="empty_date">Field is empty</string>
+    <string name="invalid_link">Invalid link</string>
+    <string name="jobs">Jobs</string>
+    <string name="add_job">Add job</string>
+    <string name="empty_jobs">Empty jobs</string>
+    <string name="user">User</string>
 </resources>

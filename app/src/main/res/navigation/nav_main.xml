@@ -3,24 +3,171 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/feedFragment">
+    app:startDestination="@id/authFragment">
 
     <fragment
+        android:id="@+id/authFragment"
+        android:name="ru.netology.nmedia.ui.auth.AuthFragment"
+        tools:layout="@layout/fragment_auth" >
+    <action
+        android:id="@+id/action_authFragment_to_feedFragment"
+        app:destination="@id/feedFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    <action
+        android:id="@+id/action_authFragment_to_regFragment"
+        app:destination="@id/regFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
         android:id="@+id/feedFragment"
-        android:name="ru.netology.nmedia.ui.FeedFragment"
-        android:label="fragment_feed"
+        android:name="ru.netology.nmedia.ui.event.FeedFragment"
         tools:layout="@layout/fragment_feed">
         <action
             android:id="@+id/action_feedFragment_to_newPostFragment"
             app:destination="@id/newPostFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_feedFragment_to_newEventFragment"
+            app:destination="@id/newEventFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_feedFragment_to_authFragment"
+            app:destination="@id/authFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_feedFragment_to_regFragment"
+            app:destination="@id/regFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_feedFragment_to_userFragment"
+            app:destination="@id/userFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_feedFragment_to_videoFragment"
+            app:destination="@id/videoFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_feedFragment_to_imageFragment"
+            app:destination="@id/imageFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
+
     <fragment
         android:id="@+id/newPostFragment"
-        android:name="ru.netology.nmedia.ui.NewPostFragment"
-        android:label="fragment_new_post"
-        tools:layout="@layout/fragment_new_post" />
+        android:name="ru.netology.nmedia.ui.posts.NewPostFragment"
+        tools:layout="@layout/fragment_new_event"></fragment>
+    <fragment
+        android:id="@+id/newEventFragment"
+        android:name="ru.netology.nmedia.ui.event.NewEventFragment"
+        tools:layout="@layout/fragment_new_event"></fragment>
+    <fragment
+        android:id="@+id/regFragment"
+        android:name="ru.netology.nmedia.ui.auth.RegFragment"
+        android:label="@string/sign_in"
+        tools:layout="@layout/fragment_reg" />
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="ru.netology.nmedia.ui.user.UserFragment"
+        android:label="@string/user"
+        tools:layout="@layout/fragment_user">
+
+        <action
+            android:id="@+id/action_userFragment_to_jobsFragment"
+            app:destination="@id/jobsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_userFragment_to_videoFragment"
+            app:destination="@id/videoFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_userFragment_to_audioFragment"
+            app:destination="@id/audioFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_userFragment_to_imageFragment"
+            app:destination="@id/imageFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_userFragment_to_newPostFragment"
+            app:destination="@id/newPostFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/jobsFragment"
+        android:name="ru.netology.nmedia.ui.user.JobsFragment"
+        android:label="@string/jobs"
+        tools:layout="@layout/fragment_jobs">
+
+        <action
+            android:id="@+id/action_jobsFragment_to_newJobFragment"
+            app:destination="@id/newJobFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/newJobFragment"
+        android:name="ru.netology.nmedia.ui.user.NewJobFragment"
+        tools:layout="@layout/fragment_new_job" />
+
+    <fragment
+        android:id="@+id/videoFragment"
+        android:name="ru.netology.nmedia.ui.VideoFragment"
+        tools:layout="@layout/fragment_video" />
+
+    <fragment
+        android:id="@+id/imageFragment"
+        android:name="ru.netology.nmedia.ui.ImageFragment"
+        tools:layout="@layout/fragment_image" />
+    <fragment
+        android:id="@+id/audioFragment"
+        android:name="ru.netology.nmedia.ui.AudioFragment"
+        tools:layout="@layout/fragment_audio" />
+
 </navigation>

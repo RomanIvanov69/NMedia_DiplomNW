@@ -23,5 +23,12 @@
         <item name="android:minWidth">@dimen/icon_button_min_size</item>
         <item name="android:minHeight">@dimen/icon_button_min_size</item>
     </style>
+    <style name="Widget.AppTheme.AddButtons" parent="Widget.AppCompat.Button.Borderless">
+        <item name="icon">@drawable/ic_add_circle_24</item>
+        <item name="iconTint">@color/colorPrimary</item>
+        <item name="backgroundTint">@color/white</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
 
 </resources>

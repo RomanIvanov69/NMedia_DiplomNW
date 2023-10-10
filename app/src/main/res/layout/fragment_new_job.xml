@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/job_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/common_spacing"
+            android:hint="@string/job"
+            android:paddingHorizontal="@dimen/common_spacing" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/job_position"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/common_spacing"
+            android:hint="@string/position"
+            android:paddingHorizontal="@dimen/common_spacing" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/job_start"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/area8x"
+                android:layout_margin="@dimen/common_spacing"
+                android:layout_weight="1"
+                android:hint="@string/start"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="@dimen/common_spacing" />
+
+            <TextView
+                android:id="@+id/job_finish"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/area8x"
+                android:layout_margin="@dimen/common_spacing"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:hint="@string/finish"
+                android:paddingHorizontal="@dimen/common_spacing" />
+
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/create_button"
+            style="@style/Widget.AppCompat.ActionMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/create_post" />
+    </LinearLayout>
+</ScrollView>

@@ -1,14 +1,9 @@
 package ru.netology.nmedia.api
 
-import okhttp3.Interceptor
 import okhttp3.MultipartBody
-import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
-import ru.netology.nmedia.BuildConfig
 import ru.netology.nmedia.dto.Event
 import ru.netology.nmedia.dto.Job
 import ru.netology.nmedia.dto.Media
@@ -25,7 +20,7 @@ interface ApiService {
     @POST("users/authentication")
     suspend fun authentication(
         @Field("login") login: String,
-        @Field("password") password: String
+        @Field("password") password: String,
     ): Response<AuthModel>
 
     @FormUrlEncoded
@@ -33,7 +28,7 @@ interface ApiService {
     suspend fun registration(
         @Field("login") login: String,
         @Field("password") password: String,
-        @Field("name") name: String
+        @Field("name") name: String,
     ): Response<AuthModel>
 
 
@@ -52,13 +47,13 @@ interface ApiService {
     @GET("posts/{id}/before")
     suspend fun getPostsBefore(
         @Path("id") id: Int,
-        @Query("count") count: Int
+        @Query("count") count: Int,
     ): Response<List<Post>>
 
     @GET("posts/{id}/after")
     suspend fun getPostsAfter(
         @Path("id") id: Int,
-        @Query("count") count: Int
+        @Query("count") count: Int,
     ): Response<List<Post>>
 
     @POST("posts")
@@ -79,13 +74,13 @@ interface ApiService {
     @GET("events/{id}/before")
     suspend fun getEventsBefore(
         @Path("id") id: Int,
-        @Query("count") count: Int
+        @Query("count") count: Int,
     ): Response<List<Event>>
 
     @GET("events/{id}/after")
     suspend fun getEventsAfter(
         @Path("id") id: Int,
-        @Query("count") count: Int
+        @Query("count") count: Int,
     ): Response<List<Event>>
 
     @POST("events")
@@ -116,4 +111,16 @@ interface ApiService {
     @DELETE("my/jobs/{id}")
     suspend fun removeJobById(@Path("id") id: Int): Response<Unit>
 
+    @GET("{authorId}/wall/latest")
+    suspend fun listGetLatest(
+        @Path("authorId") authorId: Int,
+        @Query("count") count: Int,
+    ): Response<List<Post>>
+
+    @GET("{authorId}/wall/{postId}/before")
+    suspend fun listGetBefore(
+        @Path("authorId") authorId: Int,
+        @Path("postId") postId: Int,
+        @Query("count") count: Int,
+    ): Response<List<Post>>
 }

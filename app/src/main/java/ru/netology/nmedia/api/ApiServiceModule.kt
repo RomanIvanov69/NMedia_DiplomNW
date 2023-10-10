@@ -22,16 +22,17 @@ class ApiServiceModule {
 
     @Provides
     @Singleton
-    fun provideLogging() : HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
+    fun provideLogging(): HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
         if (BuildConfig.DEBUG) {
             level = HttpLoggingInterceptor.Level.BODY
         }
     }
+
     @Provides
     @Singleton
     fun provideOkHttp(
         loggingInterceptor: HttpLoggingInterceptor,
-        appAuth: AppAuth
+        appAuth: AppAuth,
     ): OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)
         .addInterceptor { chain ->
@@ -47,7 +48,7 @@ class ApiServiceModule {
     @Provides
     @Singleton
     fun provideRetrofit(
-        okHttpClient: OkHttpClient
+        okHttpClient: OkHttpClient,
     ): Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .client(okHttpClient)
@@ -58,6 +59,6 @@ class ApiServiceModule {
     @Provides
     @Singleton
     fun provideApiService(
-        retrofit: Retrofit
+        retrofit: Retrofit,
     ): ApiService = retrofit.create()
 }

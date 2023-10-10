@@ -13,6 +13,7 @@
         android:scaleType="centerCrop"
         android:contentDescription="@string/avatar"
         app:layout_constraintStart_toStartOf="parent"
+        tools:srcCompat="@drawable/ic_empty_avatar"
         tools:ignore="MissingConstraints" />
 
     <ImageView

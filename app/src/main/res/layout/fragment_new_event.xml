@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/common_spacing">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioGroup
+            android:id="@+id/type_posts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/online"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:padding="@dimen/common_spacing"
+                android:text="@string/online"
+                android:textAllCaps="true" />
+
+            <RadioButton
+                android:id="@+id/offline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/common_spacing"
+                android:text="@string/offline"
+                android:textAllCaps="true" />
+        </RadioGroup>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/add_date"
+            style="@style/Widget.AppTheme.AddButtons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/type_posts" />
+
+        <TextView
+            android:id="@+id/text_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common_spacing"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintBottom_toBottomOf="@id/add_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/add_date"
+            app:layout_constraintTop_toTopOf="@id/add_date"
+            tools:text="08.10.2021" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/add_time"
+            style="@style/Widget.AppTheme.AddButtons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_date" />
+
+        <TextView
+            android:id="@+id/textView_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common_spacing"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintBottom_toBottomOf="@id/add_time"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/add_time"
+            app:layout_constraintTop_toTopOf="@id/add_time"
+            tools:text="15:47" />
+
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/event_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="type_posts, add_date, text_date, add_time, textView_time" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_new_post"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/area64x"
+            android:gravity="start"
+            android:inputType="textMultiLine"
+            android:padding="@dimen/common_spacing"
+            app:layout_constraintTop_toBottomOf="@id/add_time" />
+
+        <EditText
+            android:id="@+id/editText_link"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/area12x"
+            android:layout_marginTop="@dimen/common_spacing"
+            android:hint="@string/link"
+            android:importantForAutofill="no"
+            android:inputType="textUri"
+            android:maxLines="1"
+            android:paddingHorizontal="@dimen/common_spacing"
+            app:layout_constraintTop_toBottomOf="@id/edit_new_post" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/add_image_button"
+            style="@style/Widget.AppTheme.AddButtons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_image"
+            app:layout_constraintBottom_toBottomOf="@id/clear_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/clear_image" />
+
+        <TextView
+            android:id="@+id/textView_image"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common_spacing"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintBottom_toBottomOf="@id/clear_image"
+            app:layout_constraintEnd_toStartOf="@id/clear_image"
+            app:layout_constraintStart_toEndOf="@id/add_image_button"
+            app:layout_constraintTop_toTopOf="@id/clear_image"
+            tools:text="777.jpg" />
+
+        <ImageView
+            android:id="@+id/clear_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/common_spacing"
+            android:contentDescription="@string/clear_image"
+            android:padding="@dimen/common_spacing"
+            android:src="@drawable/ic_baseline_delete_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editText_link" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/create_post"
+            style="@style/Widget.MaterialComponents.Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/create_post"
+            app:layout_constraintTop_toBottomOf="@id/clear_image"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

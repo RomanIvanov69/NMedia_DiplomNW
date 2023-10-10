@@ -7,16 +7,23 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import ru.netology.nmedia.dao.JobDao
+import ru.netology.nmedia.dao.post.PostDao
+import ru.netology.nmedia.dao.post.PostRemoteKeyDao
+import ru.netology.nmedia.dao.event.EventDao
+import ru.netology.nmedia.dao.event.EventRemoteKeyDao
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-object DbModule {
-    @Provides
+class DbModule {
+
     @Singleton
-    fun provideDb(@ApplicationContext context: Context): AppDb {
-        return Room.databaseBuilder(context, AppDb::class.java, "app.db")
-            .fallbackToDestructiveMigration()
-            .build()
-    }
+    @Provides
+    fun provideDb(
+        @ApplicationContext
+        context: Context
+    ): AppDb = Room.databaseBuilder(context, AppDb::class.java, "app.db")
+        .fallbackToDestructiveMigration()
+        .build()
 }

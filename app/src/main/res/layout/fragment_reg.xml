@@ -1,29 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".ui.auth.RegFragment">
-
-    <ImageView
-        android:id="@+id/close"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|right"
-        android:contentDescription="@string/close_button"
-        android:padding="@dimen/common_spacing"
-        android:src="@drawable/close" />
 
     <EditText
         android:id="@+id/registration_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/area6x"
         android:gravity="center"
-        android:padding="@dimen/area8x"
-        android:text="@string/registration" />
+        android:text="@string/registration"
+        android:textSize="30sp"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
         android:id="@+id/avatar_container"
@@ -52,6 +45,7 @@
             android:layout_gravity="center|bottom"
             android:layout_margin="@dimen/area3x"
             android:src="@drawable/ic_baseline_add_a_photo_24" />
+
         <ImageView
             android:id="@+id/remove_photo"
             android:layout_width="wrap_content"

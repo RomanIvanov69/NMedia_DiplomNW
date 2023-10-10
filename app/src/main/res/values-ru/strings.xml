@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">NMedia</string>
+    <string name="app_name">NeWork</string>
     <string name="hello">Привет, Мир!</string>
     <string name="description_post_author_avatar">Аватар автора поста</string>
     <string name="description_post_menu">Меню поста</string>
@@ -49,4 +49,29 @@
     <string name="attachment">Вложение</string>
     <string name="date_of_event">Дата события</string>
     <string name="type_of_event">Формат события</string>
+    <string name="play_pause_stop">Воспроиз./пауза/стоп</string>
+    <string name="play">Воспроизвести</string>
+    <string name="description_full_screen_image">Изображение на весь экран</string>
+    <string name="authorization">Авторизация</string>
+    <string name="users">Пользователи</string>
+    <string name="posts">Посты</string>
+    <string name="events">События</string>
+    <string name="online">Онлайн</string>
+    <string name="offline">Оффлайн</string>
+    <string name="add_date">Дата</string>
+    <string name="add_time">Время</string>
+    <string name="link">Ссылка</string>
+    <string name="add_image">Изображение</string>
+    <string name="clear_image">Удалить картинку</string>
+    <string name="create_post">Создать</string>
+    <string name="position">Позиция</string>
+    <string name="start">Начало</string>
+    <string name="finish">Конец</string>
+    <string name="add_event">Добавить событие</string>
+    <string name="empty_date">Пустое поле</string>
+    <string name="invalid_link">Ошибка добавления ссылки</string>
+    <string name="jobs">Места работы</string>
+    <string name="add_job">Добавить работу</string>
+    <string name="empty_jobs">Нет мест работы</string>
+    <string name="user">Пользователь</string>
 </resources>
