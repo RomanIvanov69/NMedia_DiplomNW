@@ -8,6 +8,7 @@ import ru.netology.nmedia.dao.JobDao
 import ru.netology.nmedia.dto.Job
 import ru.netology.nmedia.entity.JobEntity
 import ru.netology.nmedia.entity.toDto
+import ru.netology.nmedia.entity.toEntity
 import ru.netology.nmedia.error.ApiError
 import ru.netology.nmedia.error.NetworkError
 import ru.netology.nmedia.error.UnknownError
@@ -16,7 +17,7 @@ import javax.inject.Inject
 
 class JobRepositoryImpl @Inject constructor(
     private val jobDao: JobDao,
-    private val apiService: ApiService
+    private val apiService: ApiService,
 ) : JobRepository {
 
     override val data = jobDao.getAll()
@@ -31,7 +32,7 @@ class JobRepositoryImpl @Inject constructor(
                 throw ApiError(response.code(), response.message())
             }
             val data = response.body() ?: throw ApiError(response.code(), response.message())
-            //jobDao.insert(data.toEntity())
+            jobDao.insert(data.toEntity())
         } catch (e: IOException) {
             throw NetworkError
         } catch (e: Exception) {
@@ -46,7 +47,7 @@ class JobRepositoryImpl @Inject constructor(
                 throw ApiError(response.code(), response.message())
             }
             val data = response.body() ?: throw ApiError(response.code(), response.message())
-            //jobDao.insert(JobEntity.fromDto(data))
+            jobDao.insert(JobEntity.fromDto(data))
         } catch (e: IOException) {
             throw NetworkError
         } catch (e: Exception) {

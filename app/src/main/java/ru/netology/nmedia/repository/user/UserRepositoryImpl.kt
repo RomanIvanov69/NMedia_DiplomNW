@@ -9,7 +9,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
-    private val apiService: ApiService
+    private val apiService: ApiService,
 ) : UserRepository {
 
     override suspend fun getUserById(id: Int): User {

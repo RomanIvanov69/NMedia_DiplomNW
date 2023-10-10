@@ -14,7 +14,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
-    private val apiService: ApiService
+    private val apiService: ApiService,
 ) : AuthRepository {
     override suspend fun authentication(login: String, password: String): AuthModel {
         try {
@@ -52,7 +52,7 @@ class AuthRepositoryImpl @Inject constructor(
         login: String,
         password: String,
         name: String,
-        media: MediaModel
+        media: MediaModel,
     ): AuthModel {
         try {
             val part = MultipartBody.Part.createFormData(
