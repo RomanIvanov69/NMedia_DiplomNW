@@ -1,145 +1,199 @@
 package ru.netology.nmedia.adapter
 
+import android.net.Uri
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import ru.netology.nmedia.BuildConfig
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.CardPostBinding
-import ru.netology.nmedia.databinding.CardAdBinding
-import ru.netology.nmedia.dto.Ad
+import ru.netology.nmedia.dto.Event
 import ru.netology.nmedia.dto.FeedItem
-import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.enumeration.AttachmentType
+import ru.netology.nmedia.enumeration.EventType
+import ru.netology.nmedia.util.AndroidUtils
 import ru.netology.nmedia.view.load
-import ru.netology.nmedia.view.loadCircleCrop
+import ru.netology.nmedia.view.loadAttachment
+
+interface FeedOnInteractionListener {
+    fun onLike(feedItem: FeedItem)
+    fun onRemove(id: Int)
+    fun onEdit(feedItem: FeedItem)
+    fun onUser(userId: Int)
+    fun onPlay(feedItem: FeedItem)
+    fun onVideo(url: String)
+    fun onImage(url: String)
+}
 
 class FeedAdapter(
-    private val onInteractionListener: OnInteractionListener,
-) : PagingDataAdapter<FeedItem, RecyclerView.ViewHolder>(FeedItemDiffCallback()) {
-    private val typeAd = 0
-    private val typePost = 1
+    private val onInteractionListener: FeedOnInteractionListener,
+) : PagingDataAdapter<FeedItem, FeedViewHolder>(FeedDiffCallback()) {
 
-    interface OnInteractionListener {
-        fun onLike(post: Post) {}
-        fun onEdit(post: Post) {}
-        fun onRemove(post: Post) {}
-        fun onShare(post: Post) {}
-        fun onAdClick(ad: Ad) {}
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return when (getItem(position)) {
-            is Ad -> typeAd
-            is Post -> typePost
-            null -> throw IllegalArgumentException("unknown item type")
-        }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        return when (viewType) {
-            typeAd -> AdViewHolder(
-                CardAdBinding.inflate(layoutInflater, parent, false),
-                onInteractionListener
-            )
-            typePost -> PostViewHolder(
-                CardPostBinding.inflate(layoutInflater, parent, false),
-                onInteractionListener
-            )
-            else -> throw IllegalArgumentException("unknown view type: $viewType")
-        }
-    }
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        // FIXME: students will do in HW
-        getItem(position)?.let {
-            when (it) {
-                is Post -> (holder as? PostViewHolder)?.bind(it)
-                is Ad -> (holder as? AdViewHolder)?.bind(it)
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onBindViewHolder(
+        holder: FeedViewHolder,
+        position: Int,
+        payloads: MutableList<Any>,
+    ) {
+        if (payloads.isEmpty()) {
+            onBindViewHolder(holder, position)
+        } else {
+            payloads.forEach {
+                (it as? Payload)?.let { payload ->
+                    holder.bind(payload)
+                }
             }
         }
     }
 
-    class PostViewHolder(
-        private val binding: CardPostBinding,
-        private val onInteractionListener: OnInteractionListener,
-    ) : RecyclerView.ViewHolder(binding.root) {
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onBindViewHolder(holder: FeedViewHolder, position: Int) {
+        getItem(position)?.let { holder.bind(it) }
+    }
 
-        fun bind(post: Post) {
-            binding.apply {
-                author.text = post.author
-                published.text = post.published.toString()
-                content.text = post.content
-                avatar.loadCircleCrop("${BuildConfig.BASE_URL}/avatars/${post.authorAvatar}")
-                like.isChecked = post.likedByMe
-                like.text = "${post.likes}"
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = CardPostBinding.inflate(inflater, parent, false)
+        return FeedViewHolder(binding, onInteractionListener)
+    }
+}
 
-                menu.visibility = if (post.ownedByMe) View.VISIBLE else View.INVISIBLE
+class FeedViewHolder(
+    private val binding: CardPostBinding,
+    private val listener: FeedOnInteractionListener,
+) : RecyclerView.ViewHolder(binding.root) {
 
-                menu.setOnClickListener {
-                    PopupMenu(it.context, it).apply {
-                        inflate(R.menu.options_post)
-                        // TODO: if we don't have other options, just remove dots
-                        menu.setGroupVisible(R.id.owned, post.ownedByMe)
-                        setOnMenuItemClickListener { item ->
-                            when (item.itemId) {
-                                R.id.remove -> {
-                                    onInteractionListener.onRemove(post)
-                                    true
-                                }
-                                R.id.edit -> {
-                                    onInteractionListener.onEdit(post)
-                                    true
-                                }
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun bind(feedItem: FeedItem) {
+        binding.apply {
+            feedItem.authorAvatar?.let { avatar.load(it) }
+                ?: avatar.setImageResource(R.drawable.ic_empty_avatar)
+            author.text = feedItem.author
+            authorJob.isVisible = feedItem.authorJob != null
+            authorJob.text = feedItem.authorJob
+            published.text = AndroidUtils.formatDateTime(feedItem.published)
+            content.text = feedItem.content
 
-                                else -> false
+            like.isChecked = feedItem.likedByMe
+            like.text = feedItem.likeOwnerIds.size.toString()
+            like.setOnClickListener { listener.onLike(feedItem) }
+
+            menu.isVisible = feedItem.ownedByMe
+
+            menu.setOnClickListener {
+                PopupMenu(it.context, it).apply {
+                    inflate(R.menu.options_post)
+                    setOnMenuItemClickListener { item ->
+                        when (item.itemId) {
+                            R.id.remove -> {
+                                listener.onRemove(feedItem.id)
+                                true
+                            }
+
+                            R.id.edit -> {
+                                listener.onEdit(feedItem)
+                                true
+                            }
+
+                            else -> false
+                        }
+                    }
+                }.show()
+            }
+
+            attachmentImage.visibility = View.GONE
+            music.visibility = View.GONE
+            attachmentVideo.visibility = View.GONE
+            if (feedItem.attachment != null) {
+                when (feedItem.attachment?.type) {
+                    AttachmentType.AUDIO -> {
+                        music.visibility = View.VISIBLE
+                        playButton.setOnClickListener { listener.onPlay(feedItem) }
+                        musicTitle.text = feedItem.attachment?.url
+                    }
+
+                    AttachmentType.IMAGE -> {
+                        attachmentImage.visibility = View.VISIBLE
+                        feedItem.attachment?.url?.let { url ->
+                            attachmentImage.loadAttachment(url)
+                            attachmentImage.setOnClickListener { listener.onImage(url) }
+                        }
+
+                    }
+
+                    AttachmentType.VIDEO -> {
+                        attachmentVideo.visibility = View.VISIBLE
+                        feedItem.attachment?.url?.let { url ->
+                            attachmentVideo.setOnClickListener { listener.onVideo(url) }
+                            val uri = Uri.parse(url)
+                            attachmentVideo.setVideoURI(uri)
+                            attachmentVideo.setOnPreparedListener { mp ->
+                                mp?.setVolume(0F, 0F)
+                                mp?.isLooping = true
+                                attachmentVideo.start()
                             }
                         }
-                    }.show()
-                }
+                    }
 
-                like.setOnClickListener {
-                    onInteractionListener.onLike(post)
-                }
-
-                share.setOnClickListener {
-                    onInteractionListener.onShare(post)
+                    else -> Unit
                 }
             }
+
+            link.isVisible = feedItem.link != null
+            link.text = feedItem.link
+
+            if (feedItem is Event) {
+                eventGroup.visibility = View.VISIBLE
+                eventDate.text = AndroidUtils.formatDateTime(feedItem.datetime)
+                eventType.text = feedItem.type.toString()
+                when (feedItem.type) {
+                    EventType.ONLINE -> formatOfEventIcon.setImageResource(R.drawable.is_rss_feed_24)
+                    EventType.OFFLINE -> formatOfEventIcon.setImageResource(R.drawable.baseline_signal_wifi_off_24)
+                }
+            } else {
+                eventGroup.visibility = View.GONE
+            }
+
+            avatar.setOnClickListener {
+                listener.onUser(feedItem.authorId)
+            }
         }
+
     }
 
-    class AdViewHolder(
-        private val binding: CardAdBinding,
-        private val onInteractionListener: OnInteractionListener,
-    ) : RecyclerView.ViewHolder(binding.root) {
+    fun bind(payload: Payload) {
+        payload.likeByMe?.let {
+            binding.like.isChecked = it
+        }
 
-        fun bind(ad: Ad) {
-            binding.apply {
-                image.load("${BuildConfig.BASE_URL}/media/${ad.image}")
-                image.setOnClickListener {
-                    onInteractionListener.onAdClick(ad)
-                }
-            }
+        payload.content?.let {
+            binding.content.text = it
         }
     }
+}
 
-    class FeedItemDiffCallback : DiffUtil.ItemCallback<FeedItem>() {
-        override fun areItemsTheSame(oldItem: FeedItem, newItem: FeedItem): Boolean {
-            if (oldItem::class != newItem::class) {
-                return false
-            }
+data class Payload(
+    val likeByMe: Boolean? = null,
+    val content: String? = null,
+)
 
-            return oldItem.id == newItem.id
+
+class FeedDiffCallback : DiffUtil.ItemCallback<FeedItem>() {
+    override fun areItemsTheSame(oldItem: FeedItem, newItem: FeedItem): Boolean {
+        if (oldItem::class != newItem::class) {
+            return false
         }
+        return oldItem.id == newItem.id
+    }
 
-        override fun areContentsTheSame(oldItem: FeedItem, newItem: FeedItem): Boolean {
-            return oldItem == newItem
-        }
+    override fun areContentsTheSame(oldItem: FeedItem, newItem: FeedItem): Boolean {
+        return oldItem == newItem
     }
 }
 

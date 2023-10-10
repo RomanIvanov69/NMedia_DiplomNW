@@ -16,7 +16,6 @@ sealed interface FeedItem {
     val attachment: Attachment?
     val link: String?
     val ownedByMe: Boolean
-    val users: UserPreview
 }
 
 data class Post(
@@ -32,7 +31,6 @@ data class Post(
     override val attachment: Attachment? = null,
     override val link: String?,
     override val ownedByMe: Boolean = false,
-    override val users: UserPreview,
     val mentionIds: List<Int> = emptyList(),
     val mentionedMe: Boolean,
 ) : FeedItem
@@ -50,12 +48,11 @@ data class Event(
     override val attachment: Attachment? = null,
     override val link: String?,
     override val ownedByMe: Boolean = false,
-    override val users: UserPreview,
     val datetime: String,
     val type: EventType,
     val speakerIds: List<Int> = emptyList(),
     val participantsIds: List<Int> = emptyList(),
-    val participatedByMe: Boolean
+    val participatedByMe: Boolean,
 ) : FeedItem
 
 data class Attachment(

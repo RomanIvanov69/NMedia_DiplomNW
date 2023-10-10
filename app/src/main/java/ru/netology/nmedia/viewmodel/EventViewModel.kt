@@ -10,54 +10,57 @@ import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import ru.netology.nmedia.dto.Event
 import ru.netology.nmedia.dto.FeedItem
-import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.enumeration.AttachmentType
+import ru.netology.nmedia.enumeration.EventType
 import ru.netology.nmedia.model.FeedModel
 import ru.netology.nmedia.model.MediaModel
-import ru.netology.nmedia.repository.post.PostRepository
+import ru.netology.nmedia.repository.event.EventRepository
 import ru.netology.nmedia.util.SingleLiveEvent
 import java.io.File
 import javax.inject.Inject
 
-private val empty = Post(
+private val empty = Event(
     id = 0,
     authorId = 0,
     author = "",
     authorAvatar = null,
     authorJob = null,
-    link = null,
     content = "",
     published = "",
-    mentionedMe = false,
+    link = null,
+    datetime = "",
+    type = EventType.ONLINE,
+    participatedByMe = false
 )
 
 @HiltViewModel
-class PostViewModel @Inject constructor(
-    private val repository: PostRepository,
+class EventViewModel @Inject constructor(
+    private val repository: EventRepository,
 ) : ViewModel() {
+
     private val cached = repository
         .data
         .cachedIn(viewModelScope)
 
     val data: Flow<PagingData<FeedItem>> = cached
-    val wallData: Flow<PagingData<FeedItem>> = cached
 
     private val _dataState = MutableLiveData<FeedModel>()
     val dataState: LiveData<FeedModel>
         get() = _dataState
 
     private val _edited = MutableLiveData(empty)
-    val edited: LiveData<Post>
+    val edited: LiveData<Event>
         get() = _edited
 
     private val _media = MutableLiveData<MediaModel?>(null)
     val media: LiveData<MediaModel?>
         get() = _media
 
-    private val _postCreated = SingleLiveEvent<Unit>()
-    val postCreated: LiveData<Unit>
-        get() = _postCreated
+    private val _eventCreated = SingleLiveEvent<Unit>()
+    val eventCreated: LiveData<Unit>
+        get() = _eventCreated
 
     fun addMedia(uri: Uri, file: File, type: AttachmentType) {
         _media.value = MediaModel(uri, file, type)
@@ -79,7 +82,7 @@ class PostViewModel @Inject constructor(
                                 repository.saveWithAttachment(it, media)
                             }
                         }
-                        _postCreated.value = Unit
+                        _eventCreated.value = Unit
                         clearEdited()
                         clearMedia()
                         _dataState.value = FeedModel()
@@ -91,28 +94,33 @@ class PostViewModel @Inject constructor(
         }
     }
 
-
-    fun edit(post: Post) {
-        _edited.value = post
+    fun edit(event: Event) {
+        _edited.value = event
     }
 
     fun clearEdited() {
         _edited.value = empty
     }
 
-    fun getEditPost(): Post? {
+    fun getEditEvent(): Event? {
         return if (edited.value == null || edited.value == empty) null else edited.value
     }
 
-    fun changeContent(content: String) {
+    fun changeContent(
+        content: String,
+        datetime: String,
+        eventType: EventType,
+        link: String?,
+    ) {
         val text = content.trim()
-        _edited.value = edited.value?.copy(content = text)
+        _edited.value =
+            edited.value?.copy(content = text, datetime = datetime, type = eventType, link = link)
     }
 
-    fun likePostById(post: Post) {
+    fun likeById(event: Event) {
         viewModelScope.launch {
             try {
-                repository.likePostById(post)
+                repository.likeById(event)
                 _dataState.value = FeedModel()
             } catch (e: Exception) {
                 _dataState.value = FeedModel(error = true)

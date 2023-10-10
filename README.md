@@ -13,7 +13,8 @@
 
 Gradle, SQLite, Recycle View, ViewModel, Paging, Material Design, Room, Retrofit, OkHttp, Glide, Coroutines, Hilt, Layouts, Flow, LiveData, MVVM, Firebase
 
-
-
-
-
+![](1.png)
+![](2.png)
+![](3.png)
+![](4.png)
+![](5.png)

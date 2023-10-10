@@ -20,7 +20,7 @@ import ru.netology.nmedia.util.AndroidUtils
 import ru.netology.nmedia.viewmodel.RegisterViewModel
 
 @AndroidEntryPoint
-class RegistrationFragment : Fragment() {
+class RegFragment : Fragment() {
 
     private val viewModel: RegisterViewModel by activityViewModels()
 
@@ -84,14 +84,12 @@ class RegistrationFragment : Fragment() {
                     ).show()
                 }
             }
-
-            close.setOnClickListener {
-                findNavController().navigateUp()
-            }
         }
+
         viewModel.state.observe(viewLifecycleOwner) { state ->
 
             binding.btSignUp.isEnabled = !state.loading
+
 
             if (state.register) {
                 findNavController().navigateUp()
@@ -119,5 +117,3 @@ class RegistrationFragment : Fragment() {
         return binding.root
     }
 }
-
-

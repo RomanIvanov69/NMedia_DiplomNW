@@ -6,7 +6,6 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ru.netology.nmedia.dto.Attachment
 import ru.netology.nmedia.dto.Event
-import ru.netology.nmedia.dto.UserPreview
 import ru.netology.nmedia.enumeration.EventType
 
 @Entity
@@ -25,13 +24,12 @@ data class EventEntity(
     val attachment: Attachment? = null,
     val link: String? = null,
     val ownedByMe: Boolean = false,
-    val users: Map<Int, UserPreview>,
     val datetime: String,
     @ColumnInfo(name = "event_type")
     val type: EventType,
     val speakerIds: List<Int> = emptyList(),
     val participantsIds: List<Int> = emptyList(),
-    val participatedByMe: Boolean = false
+    val participatedByMe: Boolean = false,
 ) {
     fun toDto() = Event(
         id = id,
@@ -46,7 +44,6 @@ data class EventEntity(
         attachment = attachment,
         link = link,
         ownedByMe = ownedByMe,
-        users = users,
         datetime = datetime,
         type = type,
         speakerIds = speakerIds,
@@ -68,7 +65,6 @@ data class EventEntity(
             attachment = event.attachment,
             link = event.link,
             ownedByMe = event.ownedByMe,
-            users = event.users,
             datetime = event.datetime,
             type = event.type,
             speakerIds = event.speakerIds,

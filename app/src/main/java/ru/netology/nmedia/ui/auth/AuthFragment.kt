@@ -11,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.FragmentAuthBinding
+import ru.netology.nmedia.util.AndroidUtils
 import ru.netology.nmedia.viewmodel.AuthViewModel
 
 @AndroidEntryPoint
@@ -21,7 +22,7 @@ class AuthFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         val binding = FragmentAuthBinding.inflate(inflater, container, false)
 
@@ -31,6 +32,12 @@ class AuthFragment : Fragment() {
                 val login = login.text.toString()
                 val pass = password.text.toString()
                 authViewModel.authentication(login, pass)
+                AndroidUtils.hideKeyboard(it)
+                findNavController().navigateUp()
+            }
+
+            btSignUp.setOnClickListener {
+                findNavController().navigate(R.id.action_authFragment_to_regFragment)
             }
 
             authViewModel.state.observe(viewLifecycleOwner) { state ->
@@ -38,7 +45,7 @@ class AuthFragment : Fragment() {
                 binding.btSignIn.isEnabled = !state.loading
 
                 if (state.register) {
-                    findNavController().navigateUp()
+                    findNavController().navigate(R.id.action_authFragment_to_feedFragment)
                 }
 
                 if (state.isEmpty) {
@@ -65,7 +72,6 @@ class AuthFragment : Fragment() {
                     ).show()
                 }
             }
-
             return binding.root
         }
     }

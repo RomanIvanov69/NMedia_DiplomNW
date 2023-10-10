@@ -1,21 +1,21 @@
-package ru.netology.nmedia.dao
+package ru.netology.nmedia.dao.post
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import ru.netology.nmedia.entity.PostRemoteKeyEntity
+import ru.netology.nmedia.entity.post.PostRemoteKeyEntity
 
 @Dao
 interface PostRemoteKeyDao {
-    @Query("SELECT COUNT(*) == 0 FROM PostRemoteKeyEntity")
+    @Query("SELECT COUNT(*) == 0 FROM PostEntity")
     suspend fun isEmpty(): Boolean
 
-    @Query("SELECT MAX(id) FROM PostRemoteKeyEntity")
-    suspend fun max(): Long?
+    @Query("SELECT max(`id`) FROM PostRemoteKeyEntity")
+    suspend fun max(): Int?
 
-    @Query("SELECT MIN(id) FROM PostRemoteKeyEntity")
-    suspend fun min(): Long?
+    @Query("SELECT min(`id`) FROM PostRemoteKeyEntity")
+    suspend fun min(): Int?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(key: PostRemoteKeyEntity)
@@ -24,5 +24,5 @@ interface PostRemoteKeyDao {
     suspend fun insert(keys: List<PostRemoteKeyEntity>)
 
     @Query("DELETE FROM PostRemoteKeyEntity")
-    suspend fun removeAll()
+    suspend fun clear()
 }
