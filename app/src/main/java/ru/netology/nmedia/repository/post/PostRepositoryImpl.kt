@@ -19,7 +19,6 @@ import ru.netology.nmedia.error.ApiError
 import ru.netology.nmedia.error.NetworkError
 import ru.netology.nmedia.error.UnknownError
 import ru.netology.nmedia.model.MediaModel
-import ru.netology.nmedia.repository.list.WallRemoteMediator
 import java.io.IOException
 import javax.inject.Inject
 

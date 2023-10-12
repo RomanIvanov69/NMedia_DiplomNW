@@ -6,3 +6,8 @@ data class User(
     val name: String,
     val avatar: String?,
 )
+
+//data class UserPreview(
+//    val name: String,
+//    val avatar: String?
+//)

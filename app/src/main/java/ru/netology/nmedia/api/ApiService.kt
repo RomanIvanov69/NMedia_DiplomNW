@@ -13,6 +13,7 @@ import ru.netology.nmedia.dto.User
 import ru.netology.nmedia.model.AuthModel
 
 interface ApiService {
+
     @POST("users/push-tokens")
     suspend fun saveToken(@Body pushToken: PushToken)
 
@@ -95,6 +96,9 @@ interface ApiService {
     @DELETE("events/{id}/likes")
     suspend fun dislikeEventById(@Path("id") eventId: Int): Response<Event>
 
+    @GET("users")
+    suspend fun getAll(): Response<List<User>>
+
     @GET("users/{id}")
     suspend fun getUserById(@Path("id") id: Int): Response<User>
 
@@ -110,6 +114,11 @@ interface ApiService {
 
     @DELETE("my/jobs/{id}")
     suspend fun removeJobById(@Path("id") id: Int): Response<Unit>
+
+    @GET("{authorId}/wall")
+    suspend fun getWall(
+        @Path("authorId") authorId: Int
+    ): Response<List<Post>>
 
     @GET("{authorId}/wall/latest")
     suspend fun listGetLatest(

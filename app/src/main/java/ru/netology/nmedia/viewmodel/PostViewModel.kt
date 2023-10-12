@@ -16,6 +16,7 @@ import ru.netology.nmedia.enumeration.AttachmentType
 import ru.netology.nmedia.model.FeedModel
 import ru.netology.nmedia.model.MediaModel
 import ru.netology.nmedia.repository.post.PostRepository
+import ru.netology.nmedia.repository.user.UserRepository
 import ru.netology.nmedia.util.SingleLiveEvent
 import java.io.File
 import javax.inject.Inject
@@ -41,7 +42,6 @@ class PostViewModel @Inject constructor(
         .cachedIn(viewModelScope)
 
     val data: Flow<PagingData<FeedItem>> = cached
-    val wallData: Flow<PagingData<FeedItem>> = cached
 
     private val _dataState = MutableLiveData<FeedModel>()
     val dataState: LiveData<FeedModel>
@@ -104,9 +104,9 @@ class PostViewModel @Inject constructor(
         return if (edited.value == null || edited.value == empty) null else edited.value
     }
 
-    fun changeContent(content: String) {
+    fun changeContent(content: String, link: String?) {
         val text = content.trim()
-        _edited.value = edited.value?.copy(content = text)
+        _edited.value = edited.value?.copy(content = text, link = link)
     }
 
     fun likePostById(post: Post) {

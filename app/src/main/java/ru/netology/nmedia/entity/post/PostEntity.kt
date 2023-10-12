@@ -40,7 +40,7 @@ data class PostEntity(
         likedByMe = likedByMe,
         attachment = attachment,
         ownedByMe = ownedByMe,
-    )
+        )
 
     companion object {
         fun fromDto(post: Post) = PostEntity(

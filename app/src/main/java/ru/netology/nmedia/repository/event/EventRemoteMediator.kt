@@ -11,6 +11,7 @@ import ru.netology.nmedia.dao.event.EventRemoteKeyDao
 import ru.netology.nmedia.db.AppDb
 import ru.netology.nmedia.entity.event.EventEntity
 import ru.netology.nmedia.entity.event.EventRemoteKeyEntity
+import ru.netology.nmedia.entity.event.toEntity
 import ru.netology.nmedia.enumeration.RemoteKeyType
 import ru.netology.nmedia.error.ApiError
 import javax.inject.Inject
@@ -85,6 +86,7 @@ class EventRemoteMediator @Inject constructor(
                         )
                     }
                 }
+                eventDao.insert(body.toEntity())
             }
             return MediatorResult.Success(endOfPaginationReached = body.isEmpty())
         } catch (e: Exception) {

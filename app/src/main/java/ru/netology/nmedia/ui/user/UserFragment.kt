@@ -26,6 +26,7 @@ import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.enumeration.AttachmentType
 import ru.netology.nmedia.ui.ImageFragment
 import ru.netology.nmedia.ui.VideoFragment
+import ru.netology.nmedia.ui.user.JobsFragment.Companion.USER_ID
 import ru.netology.nmedia.view.load
 import ru.netology.nmedia.viewmodel.JobViewModel
 import ru.netology.nmedia.viewmodel.PostViewModel
@@ -92,7 +93,7 @@ class UserFragment : Fragment() {
 
             override fun onUser(userId: Int) = Unit
 
-            override fun onPlay(feedItem: FeedItem) {
+            override fun onPlayPause(feedItem: FeedItem) {
                 if (feedItem.attachment?.type == AttachmentType.AUDIO) {
                     feedItem.attachment?.url?.let { }
                 }
@@ -119,13 +120,17 @@ class UserFragment : Fragment() {
         })
         binding.listContainer.adapter = adapter
 
-//        lifecycleScope.launch {
-//            repeatOnLifecycle(Lifecycle.State.STARTED) {
-//                postViewModel.wallData(userId).collectLatest { wall ->
-//                    adapter.submitData(wall)
-//                }
+//        lifecycleScope.launchWhenCreated {
+//            userViewModel.data.collectLatest {
+//                adapter.submitData(it)
 //            }
 //        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                userViewModel.getWall(id)
+            }
+        }
 
         userViewModel.userDataState.observe(viewLifecycleOwner) { state ->
             binding.swiperefresh.isRefreshing = state.refreshing

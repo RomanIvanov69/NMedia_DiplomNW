@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/bk">
+            app:layout_constraintTop_toTopOf="parent">
 
             <RadioButton
                 android:id="@+id/online"
@@ -44,16 +44,6 @@
             android:text="@string/add_date"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/type_posts" />
-
-        <ImageView
-            android:id="@+id/bk"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/close_button"
-            android:padding="@dimen/common_spacing"
-            android:src="@drawable/baseline_arrow_back_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/text_date"

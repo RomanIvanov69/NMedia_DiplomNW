@@ -61,18 +61,13 @@ class NewPostFragment: Fragment() {
                 Snackbar.make(binding.root, R.string.invalid_link, Snackbar.LENGTH_LONG).show()
                 return@setOnClickListener
             }
-            viewModel.changeContent(content)
+            viewModel.changeContent(content,link)
             viewModel.save()
             AndroidUtils.hideKeyboard(requireView())
             findNavController().navigate(R.id.feedFragment)
         }
 
         viewModel.postCreated.observe(viewLifecycleOwner) {
-            findNavController().navigateUp()
-        }
-
-        binding.bk.setOnClickListener {
-            viewModel.clearEdited()
             findNavController().navigateUp()
         }
 

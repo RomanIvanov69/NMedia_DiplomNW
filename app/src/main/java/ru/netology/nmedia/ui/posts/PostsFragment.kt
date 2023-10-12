@@ -61,7 +61,7 @@ class PostsFragment : Fragment() {
                 )
             }
 
-            override fun onPlay(feedItem: FeedItem) {
+            override fun onPlayPause(feedItem: FeedItem) {
                 if (feedItem.attachment?.type == AttachmentType.AUDIO) {
                     feedItem.attachment?.url?.let { }
                 }

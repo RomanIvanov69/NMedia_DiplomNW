@@ -26,7 +26,7 @@ interface FeedOnInteractionListener {
     fun onRemove(id: Int)
     fun onEdit(feedItem: FeedItem)
     fun onUser(userId: Int)
-    fun onPlay(feedItem: FeedItem)
+    fun onPlayPause(feedItem: FeedItem)
     fun onVideo(url: String)
     fun onImage(url: String)
 }
@@ -114,7 +114,7 @@ class FeedViewHolder(
                 when (feedItem.attachment?.type) {
                     AttachmentType.AUDIO -> {
                         music.visibility = View.VISIBLE
-                        playButton.setOnClickListener { listener.onPlay(feedItem) }
+                        playButton.setOnClickListener { listener.onPlayPause(feedItem) }
                         musicTitle.text = feedItem.attachment?.url
                     }
 
