@@ -13,6 +13,6 @@ interface PostRepository {
     suspend fun save(post: Post)
     suspend fun saveWithAttachment(post: Post, media: MediaModel)
     suspend fun removeById(id: Int)
-    suspend fun getPostById(id: Int): Post?
+    // suspend fun getPostById(id: Int): Post?
     suspend fun wallRemoveById(id: Int)
 }

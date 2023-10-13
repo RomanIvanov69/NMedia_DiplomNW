@@ -17,15 +17,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val repository: AuthRepository,
-    private val appAuth: AppAuth
-) : ViewModel() {
+    private val appAuth: AppAuth,
+    private val repository: AuthRepository): ViewModel() {
     val data: LiveData<AuthModel> = appAuth
-        .authState
+        .authStateFlow
         .asLiveData(Dispatchers.Default)
 
     val authorized: Boolean
-        get() = data.value != AuthModel()
+        get() = appAuth.authStateFlow.value.id != 0
 
     private val _state = MutableLiveData<AuthModelState>()
     val state: LiveData<AuthModelState>

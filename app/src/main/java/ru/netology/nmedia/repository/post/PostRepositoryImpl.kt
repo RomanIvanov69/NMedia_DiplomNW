@@ -19,6 +19,7 @@ import ru.netology.nmedia.error.ApiError
 import ru.netology.nmedia.error.NetworkError
 import ru.netology.nmedia.error.UnknownError
 import ru.netology.nmedia.model.MediaModel
+import ru.netology.nmedia.repository.list.WallRemoteMediator
 import java.io.IOException
 import javax.inject.Inject
 
@@ -127,8 +128,7 @@ class PostRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getPostById(id: Int): Post? =
-        wallDao.getPostById(id)?.toDto()
+    //override suspend fun getPostById(id: Int): Post? = wallDao.getPostById(id)
 
     override suspend fun wallRemoveById(id: Int) = wallDao.removeById(id)
 

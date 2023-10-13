@@ -25,7 +25,7 @@ class RegisterViewModel @Inject constructor(
 ) : ViewModel() {
 
     val data: LiveData<AuthModel> = appAuth
-        .authState
+        .authStateFlow
         .asLiveData(Dispatchers.Default)
 
     private val _state = MutableLiveData<AuthModelState>()

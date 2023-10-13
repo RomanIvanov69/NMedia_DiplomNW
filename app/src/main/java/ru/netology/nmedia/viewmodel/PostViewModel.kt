@@ -4,12 +4,19 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.dto.FeedItem
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.enumeration.AttachmentType
@@ -33,13 +40,26 @@ private val empty = Post(
     mentionedMe = false,
 )
 
+@ExperimentalCoroutinesApi
 @HiltViewModel
 class PostViewModel @Inject constructor(
     private val repository: PostRepository,
+    auth: AppAuth,
 ) : ViewModel() {
     private val cached = repository
         .data
         .cachedIn(viewModelScope)
+
+//    val data: Flow<PagingData<FeedItem>> = auth
+//        .authStateFlow
+//        .flatMapLatest { (myId, _) ->
+//            val cached = repository.data.cachedIn(viewModelScope)
+//            cached.map { pagingData ->
+//                pagingData.map { post ->
+//                    post.copy(ownedByMe = post.authorId.toLong() == myId)
+//                }
+//            }
+//        }
 
     val data: Flow<PagingData<FeedItem>> = cached
 

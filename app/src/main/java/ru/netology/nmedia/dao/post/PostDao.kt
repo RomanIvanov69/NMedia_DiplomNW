@@ -5,6 +5,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
+import ru.netology.nmedia.entity.JobEntity
 import ru.netology.nmedia.entity.post.PostEntity
 
 @Dao
@@ -32,4 +34,5 @@ interface PostDao {
 
     @Query("SELECT COUNT(*) FROM PostEntity")
     suspend fun count(): Long
+
 }

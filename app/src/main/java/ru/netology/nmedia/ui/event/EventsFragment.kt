@@ -24,6 +24,7 @@ import ru.netology.nmedia.dto.Event
 import ru.netology.nmedia.dto.FeedItem
 import ru.netology.nmedia.enumeration.AttachmentType
 import ru.netology.nmedia.ui.ImageFragment
+import ru.netology.nmedia.ui.MediaLifecycleObserver
 import ru.netology.nmedia.ui.VideoFragment
 import ru.netology.nmedia.ui.user.UserFragment
 import ru.netology.nmedia.viewmodel.EventViewModel
@@ -31,6 +32,7 @@ import ru.netology.nmedia.viewmodel.EventViewModel
 class EventsFragment : Fragment() {
 
     private val eventViewModel by activityViewModels<EventViewModel>()
+    private val mediaObserver = MediaLifecycleObserver()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,7 +66,7 @@ class EventsFragment : Fragment() {
 
             override fun onPlayPause(feedItem: FeedItem) {
                 if (feedItem.attachment?.type == AttachmentType.AUDIO) {
-                    feedItem.attachment?.url?.let { }
+                    feedItem.attachment?.url?.let { mediaObserver.playPause(it) }
                 }
             }
 

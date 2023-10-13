@@ -10,6 +10,8 @@ import ru.netology.nmedia.repository.event.EventRepository
 import ru.netology.nmedia.repository.event.EventRepositoryImpl
 import ru.netology.nmedia.repository.job.JobRepository
 import ru.netology.nmedia.repository.job.JobRepositoryImpl
+import ru.netology.nmedia.repository.list.WallRepository
+import ru.netology.nmedia.repository.list.WallRepositoryImpl
 import ru.netology.nmedia.repository.post.PostRepository
 import ru.netology.nmedia.repository.post.PostRepositoryImpl
 import ru.netology.nmedia.repository.user.UserRepository
@@ -39,4 +41,7 @@ interface RepositoryModule {
     @Singleton
     @Binds
     fun bindsJobRepository(jobRepository: JobRepositoryImpl): JobRepository
+    @Singleton
+    @Binds
+    fun bindsWallRepository(wallRepository: WallRepositoryImpl): WallRepository
 }

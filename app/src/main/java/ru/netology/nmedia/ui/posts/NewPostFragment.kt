@@ -64,7 +64,6 @@ class NewPostFragment: Fragment() {
             viewModel.changeContent(content,link)
             viewModel.save()
             AndroidUtils.hideKeyboard(requireView())
-            findNavController().navigate(R.id.feedFragment)
         }
 
         viewModel.postCreated.observe(viewLifecycleOwner) {

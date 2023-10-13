@@ -36,7 +36,7 @@ class JobViewModel @Inject constructor(
 ) : ViewModel() {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val data: Flow<List<Job>> = appAuth.authState
+    val data: Flow<List<Job>> = appAuth.authStateFlow
         .flatMapLatest { (ownerId, _) ->
             repository.data.map {
                 it.map { job ->

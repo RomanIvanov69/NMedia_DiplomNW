@@ -23,6 +23,7 @@ import ru.netology.nmedia.dto.FeedItem
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.enumeration.AttachmentType
 import ru.netology.nmedia.ui.ImageFragment
+import ru.netology.nmedia.ui.MediaLifecycleObserver
 import ru.netology.nmedia.ui.VideoFragment
 import ru.netology.nmedia.ui.user.UserFragment
 import ru.netology.nmedia.viewmodel.PostViewModel
@@ -30,6 +31,7 @@ import ru.netology.nmedia.viewmodel.PostViewModel
 class PostsFragment : Fragment() {
 
     private val postViewModel by activityViewModels<PostViewModel>()
+    private val mediaObserver = MediaLifecycleObserver()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,7 +65,7 @@ class PostsFragment : Fragment() {
 
             override fun onPlayPause(feedItem: FeedItem) {
                 if (feedItem.attachment?.type == AttachmentType.AUDIO) {
-                    feedItem.attachment?.url?.let { }
+                    feedItem.attachment?.url?.let { mediaObserver.playPause(it) }
                 }
             }
 
@@ -89,10 +91,8 @@ class PostsFragment : Fragment() {
         binding.listPosts.adapter = adapter
 
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                postViewModel.data.collectLatest { data ->
-                    adapter.submitData(data)
-                }
+            lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                postViewModel.data.collectLatest { adapter.submitData(it) }
             }
         }
 
@@ -113,9 +113,14 @@ class PostsFragment : Fragment() {
             }
         }
 
+        mediaObserver.player?.setOnCompletionListener {
+            mediaObserver.player?.stop()
+        }
+
         binding.swiperefresh.setOnRefreshListener(adapter::refresh)
 
 
         return binding.root
     }
 }
+

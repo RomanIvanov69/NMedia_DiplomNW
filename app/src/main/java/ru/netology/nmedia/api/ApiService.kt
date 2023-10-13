@@ -5,6 +5,7 @@ import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
 import ru.netology.nmedia.dto.Event
+import ru.netology.nmedia.dto.FeedItem
 import ru.netology.nmedia.dto.Job
 import ru.netology.nmedia.dto.Media
 import ru.netology.nmedia.dto.Post
@@ -97,7 +98,10 @@ interface ApiService {
     suspend fun dislikeEventById(@Path("id") eventId: Int): Response<Event>
 
     @GET("users")
-    suspend fun getAll(): Response<List<User>>
+    suspend fun getAllPost(): Response<List<User>>
+
+    @GET("users/{id}")
+    suspend fun getPostUserById(@Path("id") id: Int): Response<List<Post>>
 
     @GET("users/{id}")
     suspend fun getUserById(@Path("id") id: Int): Response<User>
@@ -118,7 +122,7 @@ interface ApiService {
     @GET("{authorId}/wall")
     suspend fun getWall(
         @Path("authorId") authorId: Int
-    ): Response<List<Post>>
+    ): Response<List<FeedItem>>
 
     @GET("{authorId}/wall/latest")
     suspend fun listGetLatest(

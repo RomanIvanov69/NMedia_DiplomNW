@@ -31,12 +31,14 @@ import ru.netology.nmedia.view.load
 import ru.netology.nmedia.viewmodel.JobViewModel
 import ru.netology.nmedia.viewmodel.PostViewModel
 import ru.netology.nmedia.viewmodel.UserViewModel
+import ru.netology.nmedia.viewmodel.WallViewModel
 
 class UserFragment : Fragment() {
 
     private val userViewModel by activityViewModels<UserViewModel>()
     private val postViewModel by activityViewModels<PostViewModel>()
     private val jobViewModel by activityViewModels<JobViewModel>()
+    private val wallViewModel by activityViewModels<WallViewModel>()
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -120,15 +122,9 @@ class UserFragment : Fragment() {
         })
         binding.listContainer.adapter = adapter
 
-//        lifecycleScope.launchWhenCreated {
-//            userViewModel.data.collectLatest {
-//                adapter.submitData(it)
-//            }
-//        }
-
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                userViewModel.getWall(id)
+        lifecycleScope.launchWhenCreated {
+            postViewModel.data.collectLatest {
+                adapter.submitData(it)
             }
         }
 

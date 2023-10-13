@@ -43,7 +43,7 @@ class AppAuth @Inject constructor(
         sendPushToken()
     }
 
-    val authState = _authState.asStateFlow()
+    val authStateFlow = _authState.asStateFlow()
 
     @Synchronized
     fun setAuth(id: Int, token: String?) {
@@ -91,4 +91,6 @@ class AppAuth @Inject constructor(
         private const val TOKEN_KEY = "TOKEN_KEY"
         private const val ID_KEY = "ID_KEY"
     }
+
+
 }

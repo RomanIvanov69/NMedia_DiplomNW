@@ -1,16 +1,12 @@
 package ru.netology.nmedia.repository.user
 
-import androidx.paging.PagingData
-import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.dto.User
 import kotlinx.coroutines.flow.Flow
-import ru.netology.nmedia.dto.FeedItem
+import ru.netology.nmedia.dto.Post
 
 interface UserRepository {
 
-    val data: Flow<PagingData<FeedItem>>
+    val data: Flow<List<Post>>
     suspend fun getUserById(id: Int): User
-    suspend fun getAll()
-    suspend fun getPostById(id: Int): Post?
-    suspend fun loadUserWall(id: Int)
+    suspend fun getPostUserById(id: Int)
 }
